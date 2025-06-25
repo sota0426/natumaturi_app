@@ -1,7 +1,7 @@
 
 // components/MenuForm.tsx
-import React, { useEffect, useRef } from 'react';
-import type { Category, MenuForm as MenuFormType } from '../types';
+import React, { useRef } from 'react';
+import type { Category, MenuForm as MenuFormType } from '../../types';
 
 interface FormField {
   name: string;
@@ -15,7 +15,6 @@ interface MenuFormProps {
   setMenuForm: (form: MenuFormType) => void;
   editingMenuId: number | null;
   onSubmit: () => void;
-  onCancel: () => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
@@ -25,7 +24,6 @@ export const MenuForm: React.FC<MenuFormProps> = ({
   setMenuForm,
   editingMenuId,
   onSubmit,
-  onCancel,
   onKeyDown,
 }) => {
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -58,7 +56,7 @@ export const MenuForm: React.FC<MenuFormProps> = ({
         >
           <option value="">選択</option>
           {categories.map((c) => (
-            <option key={c.id} value={c.id}>{c.name}</option>
+            <option key={c.id} value={c.id}>{c.id} - {c.name}</option>
           ))}
         </select>
       )
@@ -120,6 +118,12 @@ export const MenuForm: React.FC<MenuFormProps> = ({
             </span>
         メニュー登録
       </h2>
+          <div className="text-sm text-gray-600 mb-3 flex items-center gap-2">
+            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">
+              💡 ヒント
+            </span>
+            エンターキーで続けて登録が行えます。
+          </div>      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {getFormFields().map((field) => (
           <div key={field.name} className="flex flex-col">
@@ -139,15 +143,14 @@ export const MenuForm: React.FC<MenuFormProps> = ({
         >
           登録
         </button>
-        {editingMenuId !== null && (
-          <button
-            onClick={onCancel}
-            className="bg-gray-400 text-white px-4 py-2 rounded"
-          >
-            キャンセル
-          </button>
-        )}
       </div>
+      <div
+        className='mt-3'
+      >
+
+
+      </div>
+
     </section>
   );
 };

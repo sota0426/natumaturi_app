@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { Category } from '../types';
+import type { Category } from '../../types';
 
 interface CategorySectionProps {
   categories: Category[];
@@ -22,7 +22,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
 }) => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(true); // デフォルトで表示状態
+  const [isOpen, setIsOpen] = useState<boolean>(false); // デフォルトで表示状態
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
     setDraggedIndex(index);

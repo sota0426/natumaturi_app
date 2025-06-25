@@ -1,9 +1,10 @@
 // MenuPage.tsx (メインコンポーネント)
 'use client';
 
-import { CategorySection } from '@/hooks/CategorySection';
-import { MenuForm } from '@/hooks/MenuForm';
-import { MenuList } from '@/hooks/MenuList';
+import MenuUploader from '@/components/Menu/MenuUploader';
+import { CategorySection } from '@/components/Menu/CategorySection';
+import { MenuForm } from '@/components/Menu/MenuForm';
+import { MenuList } from '@/components/Menu/MenuList';
 import { useCategoryManagement } from '@/hooks/useCategoryManagement';
 import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
 import { useMenuData } from '@/hooks/useMenuData';
@@ -54,7 +55,6 @@ const MenuPage = () => {
         setMenuForm={setMenuForm}
         editingMenuId={editingMenuId}
         onSubmit={handleAddOrUpdateMenu}
-        onCancel={cancelEdit}
         onKeyDown={handleKeyDown}
       />
 
@@ -70,7 +70,7 @@ const MenuPage = () => {
         onDeleteMenu={deleteMenu}
         onMoveMenu={moveMenu}
       />
-      
+           <MenuUploader  />
     </div>
   );
 };
