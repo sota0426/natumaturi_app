@@ -1,16 +1,20 @@
-export type Category = { id: number; name: string };
+export type Category = { 
+  id: number| null ; 
+  name: string 
+};
+
 export type MenuItem = {
-  id: number;
-  categoryId: number;
+  id: number| null ;
+  categoryId: number| null ;
   categoryName: string;
   name: string;
-  price: number;
-  stock: number;
+  price: number| null ;
+  stock: number| null ;
 };
 
 export type MenuForm = {
-  categoryId: string;
+  categoryId: number | null ;
   name: string;
-  price: string;
-  stock: string;
+  price: number| null ;
+  stock: number| null ;
 };

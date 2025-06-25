@@ -1,56 +1,101 @@
+// components/CategoryBlock.tsx
+import React, { useState } from 'react';
 import { Category, MenuItem } from '@/types';
-import React from 'react';
-import { MenuRow } from './MenuRow';
+import { MenuFormInline } from './MenuFormInline';
 
 interface Props {
   category: Category;
   menus: MenuItem[];
-  onEditMenu: (menu: MenuItem) => void;
-  onUpdateMenu: () => void;
+  onAddMenu: (menu: MenuItem) => void;
+  onUpdateMenu: (menu: MenuItem) => void;
   onDeleteMenu: (menu: MenuItem) => void;
-  onMoveMenu: (categoryId: number, index: number, direction: 'up' | 'down') => void;
-  editingMenuId: number | null;
-  menuForm: MenuItem;
-  setMenuForm: (form: MenuItem) => void;
-  onCancelEdit: () => void;
 }
 
-export const CategoryBlock: React.FC<Props> = ({ category, menus, ...rest }) => {
-  const filteredMenus = menus.filter((m) => m.categoryId === category.id);
+export const CategoryBlock: React.FC<Props> = ({
+  category,
+  menus,
+  onAddMenu,
+  onUpdateMenu,
+  onDeleteMenu,
+}) => {
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [form, setForm] = useState<MenuItem>({
+    id: "",
+    name: '',
+    price: "",
+    stock: "",
+    categoryId: category.id,
+  });
+
+  const handleAdd = () => {
+    onAddMenu({ ...form, id: Date.now() });
+    setForm({ ...form, name: '', price: '', stock: '' });
+    setIsAdding(false);
+  };
+
+  const handleUpdate = () => {
+    if (editingId !== null) {
+      onUpdateMenu(form);
+      setEditingId(null);
+      setForm({ ...form, name: '', price: '', stock: '' });
+    }
+  };
 
   return (
-    <div className="mb-6">
-      <h3 className="font-semibold mb-2">
-        {category.id} - {category.name}
+    <div className="mb-6 bg-white p-4 rounded shadow">
+      <h3 className="text-lg font-bold mb-2">
+        {category.name}
       </h3>
 
-      {filteredMenus.length === 0 ? (
-        <p className="text-gray-500">メニューがありません。</p>
+      {menus.filter(m => m.categoryId === category.id).map((menu) =>
+        editingId === menu.id ? (
+          <MenuFormInline
+            key={menu.id}
+            menuForm={form}
+            setMenuForm={setForm}
+            onSubmit={handleUpdate}
+            onCancel={() => setEditingId(null)}
+            isEditing={true}
+          />
+        ) : (
+          <div key={menu.id} className="flex gap-2 items-center mb-1">
+            <span>{menu.name}</span>
+            <span>¥{menu.price}</span>
+            <span>残: {menu.stock}</span>
+            <button onClick={() => {
+              setEditingId(menu.id);
+              setForm(menu);
+            }} className="text-blue-500 text-sm underline">編集</button>
+            <button onClick={() => onDeleteMenu(menu)} className="text-red-500 text-sm underline">削除</button>
+          </div>
+        )
+      )}
+
+      {isAdding ? (
+        <MenuFormInline
+          menuForm={form}
+          setMenuForm={setForm}
+          onSubmit={handleAdd}
+          onCancel={() => setIsAdding(false)}
+          isEditing={false}
+        />
       ) : (
-        <table className="w-full text-sm border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-0 py-1">No</th>
-              <th className="border px-2 py-1">メニュー名</th>
-              <th className="border px-2 py-1">金額</th>
-              <th className="border px-2 py-1">残数</th>
-              <th className="border px-2 py-1">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredMenus.map((menu, idx) => (
-              <MenuRow
-                key={`${menu.categoryId}-${menu.id}`}
-                categoryId={category.id}
-                menu={menu}
-                index={idx}
-                isFirst={idx === 0}
-                isLast={idx === filteredMenus.length - 1}
-                {...rest}
-              />
-            ))}
-          </tbody>
-        </table>
+        <button
+          onClick={() => {
+            setForm({ 
+              id: "", 
+              name: '', 
+              price: '', 
+              stock: '', 
+              categoryId: category.id 
+          });
+            setIsAdding(true);
+          }}
+          className="text-sm text-blue-500 underline mt-2"
+        >
+          ＋追加する
+        </button>
       )}
     </div>
   );

@@ -3,7 +3,7 @@
 
 import MenuUploader from '@/components/Menu/MenuUploader';
 import { CategorySection } from '@/components/Menu/CategorySection';
-import { MenuForm } from '@/components/Menu/MenuForm';
+
 import { MenuList } from '@/components/Menu/MenuList';
 import { useCategoryManagement } from '@/hooks/useCategoryManagement';
 import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
@@ -35,7 +35,6 @@ const MenuPage = () => {
     cancelEdit,
   } = useMenuManagement(categories, menus, updateAndSave);
 
-  const { handleKeyDown } = useKeyboardNavigation(handleAddOrUpdateMenu);
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-10">
@@ -49,27 +48,21 @@ const MenuPage = () => {
         onReorderCategories={handleReorderCategories}
       />
 
-      <MenuForm
-        categories={categories}
-        menuForm={menuForm}
-        setMenuForm={setMenuForm}
-        editingMenuId={editingMenuId}
-        onSubmit={handleAddOrUpdateMenu}
-        onKeyDown={handleKeyDown}
-      />
+    <MenuList
+      categories={categories}
+      menus={menus}
+      onAddMenu={handleAddOrUpdateMenu}
+      onUpdateMenu={handleAddOrUpdateMenu}
+      onDeleteMenu={deleteMenu}
+      onMoveMenu={moveMenu}
+      editingMenuId={editingMenuId}
+      menuForm={menuForm}
+      setMenuForm={setMenuForm}
+      onCancelEdit={cancelEdit}
+      onEditMenu={startEditMenu}
+    />
 
-      <MenuList
-        categories={categories}
-        menus={menus}
-        onEditMenu={startEditMenu}
-        onUpdateMenu={handleAddOrUpdateMenu} // 追加
-        editingMenuId={editingMenuId}        // 追加
-        menuForm={menuForm}                  // 追加
-        setMenuForm={setMenuForm}            // 追加
-        onCancelEdit={cancelEdit}            
-        onDeleteMenu={deleteMenu}
-        onMoveMenu={moveMenu}
-      />
+
            <MenuUploader  />
     </div>
   );
