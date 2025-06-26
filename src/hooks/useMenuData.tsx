@@ -1,10 +1,15 @@
-
 // hooks/useMenuData.ts
 import type { Category, MenuItem } from '../types';
 import { useLocalStorage } from './useLocalStorage';
 
 export const useMenuData = () => {
-  const { categories, menus, setCategories, setMenus, saveToLocalStorage } = useLocalStorage();
+  const {
+    categories,
+    menus,
+    setCategories,
+    setMenus,
+    saveToLocalStorage,
+  } = useLocalStorage();
 
   const reassignCategoryIds = (cats: Category[]) => {
     return cats.map((cat, i) => ({ ...cat, id: i + 1 }));
@@ -25,7 +30,7 @@ export const useMenuData = () => {
     return newMenus;
   };
 
-  const updateAndSave = (updatedCats: Category[], updatedMenus: MenuItem[]) => {
+  const UpdateAndSave = (updatedCats: Category[], updatedMenus: MenuItem[]) => {
     const newCats = reassignCategoryIds(updatedCats);
     const newMenus = reassignMenuIds(updatedMenus, newCats);
     setCategories(newCats);
@@ -33,9 +38,46 @@ export const useMenuData = () => {
     saveToLocalStorage(newCats, newMenus);
   };
 
+
+
+  const AddMenu = (form: {
+    categoryId: number;
+    name: string;
+    price: number;
+    stock: number;
+  }) => {
+    const { categoryId, name, price, stock } = form;
+
+    const category = categories?.find((c) => c.id === categoryId);
+    alert(JSON.stringify(category)); // デバッグ用
+
+    if (!category || !name.trim() || !price || !stock) {
+      return;
+    }
+
+    const maxId = menus.length ? Math.max(...menus.map((m) => m.id)) : 0;
+    const newMenu: MenuItem = {
+      id: maxId + 1,
+      categoryId: category.id,
+      categoryName: category.name,
+      name: name.trim(),
+      price,
+      stock,
+    }
+    UpdateAndSave(categories, [...menus, newMenu]);
+  };
+
+
+  const DeleteMenu = (menuId:number)=>{
+    const updatedMenus = menus.filter((m)=> m.id !== menuId);
+    UpdateAndSave(categories,updatedMenus);
+  }
+
+
+
   return {
-    categories,
-    menus,
-    updateAndSave,
+    UpdateAndSave,
+    AddMenu,
+    DeleteMenu
   };
 };

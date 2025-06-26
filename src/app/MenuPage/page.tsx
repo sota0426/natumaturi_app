@@ -3,18 +3,17 @@
 
 import MenuUploader from '@/components/Menu/MenuUploader';
 import { CategorySection } from '@/components/Menu/CategorySection';
-
 import { MenuList } from '@/components/Menu/MenuList';
 import { useCategoryManagement } from '@/hooks/useCategoryManagement';
-import { useKeyboardNavigation } from '@/hooks/useKeyboardNavigation';
 import { useMenuData } from '@/hooks/useMenuData';
-import { useMenuManagement } from '@/hooks/useMenuManagement';
 import React from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 
 const MenuPage = () => {
-  const { categories, menus, updateAndSave } = useMenuData();
-  
+  const { updateAndSave } = useMenuData();
+    const { categories, menus} = useLocalStorage();
+    
   const {
    newCategory,
     setNewCategory,
@@ -24,16 +23,6 @@ const MenuPage = () => {
     handleReorderCategories,
   } = useCategoryManagement(categories, menus, updateAndSave);
 
-  const {
-    menuForm,
-    setMenuForm,
-    editingMenuId,
-    handleAddOrUpdateMenu,
-    startEditMenu,
-    deleteMenu,
-    moveMenu,
-    cancelEdit,
-  } = useMenuManagement(categories, menus, updateAndSave);
 
 
   return (
@@ -48,22 +37,8 @@ const MenuPage = () => {
         onReorderCategories={handleReorderCategories}
       />
 
-    <MenuList
-      categories={categories}
-      menus={menus}
-      onAddMenu={handleAddOrUpdateMenu}
-      onUpdateMenu={handleAddOrUpdateMenu}
-      onDeleteMenu={deleteMenu}
-      onMoveMenu={moveMenu}
-      editingMenuId={editingMenuId}
-      menuForm={menuForm}
-      setMenuForm={setMenuForm}
-      onCancelEdit={cancelEdit}
-      onEditMenu={startEditMenu}
-    />
-
-
-           <MenuUploader  />
+      <MenuList />
+      <MenuUploader  />
     </div>
   );
 };

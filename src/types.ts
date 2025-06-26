@@ -1,20 +1,20 @@
 export type Category = { 
-  id: number| null ; 
+  id: number ; 
   name: string 
 };
 
 export type MenuItem = {
-  id: number| null ;
-  categoryId: number| null ;
+  id: number  | "" ;
+  categoryId: number ;
   categoryName: string;
   name: string;
-  price: number| null ;
-  stock: number| null ;
+  price: number | "" ;
+  stock: number | "" ;
 };
 
 export type MenuForm = {
-  categoryId: number | null ;
+  categoryId: number  ;
   name: string;
-  price: number| null ;
-  stock: number| null ;
+  price: number | "" ;
+  stock: number | "" ;
 };

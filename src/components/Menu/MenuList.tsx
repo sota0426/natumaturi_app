@@ -1,23 +1,14 @@
 // components/MenuList.tsx
 import React from 'react';
-import { Category, MenuItem } from '@/types';
 import { CategoryBlock } from './CategoryBlock';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-interface MenuListProps {
-  categories: Category[];
-  menus: MenuItem[];
-  onAddMenu: (menu: MenuItem) => void;
-  onUpdateMenu: (menu: MenuItem) => void;
-  onDeleteMenu: (menu: MenuItem) => void;
-}
 
-export const MenuList: React.FC<MenuListProps> = ({
-  categories,
-  menus,
-  onAddMenu,
-  onUpdateMenu,
-  onDeleteMenu,
-}) => {
+export const MenuList = () => {
+  
+  const { categories} = useLocalStorage();
+  
+  
   return (
     <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 
@@ -41,10 +32,6 @@ export const MenuList: React.FC<MenuListProps> = ({
           <CategoryBlock
             key={cat.id}
             category={cat}
-            menus={menus}
-            onAddMenu={onAddMenu}
-            onUpdateMenu={onUpdateMenu}
-            onDeleteMenu={onDeleteMenu}
           />
         ))
       )}
