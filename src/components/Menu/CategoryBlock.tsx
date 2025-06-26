@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Category  } from '@/types';
 import { MenuFormInline } from './MenuFormInline';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useMenuData } from '@/hooks/useMenuData';
+import { useMenuManagement } from '@/hooks/useMenuManagement';
 
 interface Props {
   category: Category;
@@ -16,8 +16,8 @@ export const CategoryBlock: React.FC<Props> = ({
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<number | "">("");
 
-  const {  menus} = useLocalStorage();
-  const { DeleteMenu } = useMenuData();
+  const { menus} = useLocalStorage();
+  const { DeleteMenu } = useMenuManagement();
   
 
 
@@ -31,6 +31,7 @@ export const CategoryBlock: React.FC<Props> = ({
         editingId === menu.id ? (
           <MenuFormInline
             key={menu.id}
+            menu={menu}
             category={category}        
             onCancel={() => setIsAdding(false)}
             isEditing={false}

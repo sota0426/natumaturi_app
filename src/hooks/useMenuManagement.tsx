@@ -1,8 +1,8 @@
-// hooks/useMenuData.ts
+// hooks/useMenuManagement.ts
 import type { Category, MenuItem } from '../types';
 import { useLocalStorage } from './useLocalStorage';
 
-export const useMenuData = () => {
+export const useMenuManagement = () => {
   const {
     categories,
     menus,

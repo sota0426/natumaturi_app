@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import type { Category } from '../../types';
+import { useCategoryManagement } from '@/hooks/useCategoryManagement';
+import { useMenuManagement } from '@/hooks/useMenuManagement';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-interface CategorySectionProps {
-  categories: Category[];
-  newCategory: string;
-  setNewCategory: (value: string) => void;
-  onAddCategory: () => void;
-  onMoveCategory: (index: number, direction: 'up' | 'down') => void;
-  onDeleteCategory: (categoryId: string) => void;
-  onReorderCategories: (startIndex: number, endIndex: number) => void;
-}
 
-export const CategorySection: React.FC<CategorySectionProps> = ({
-  categories,
-  newCategory,
-  setNewCategory,
-  onAddCategory,
-  onMoveCategory,
-  onDeleteCategory,
-  onReorderCategories,
-}) => {
+
+export const CategorySection= () => {
+
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false); // デフォルトで表示状態
+
+  const { updateAndSave } = useMenuManagement();
+  const { categories, menus} = useLocalStorage();
+    
+    const {
+    newCategory,
+    setNewCategory,
+    handleAddCategory,
+    moveCategory,
+    handleDeleteCategory,
+    handleReorderCategories,
+  } = useCategoryManagement(categories, menus);
+
+
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
     setDraggedIndex(index);
@@ -43,7 +44,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
   const handleDrop = (e: React.DragEvent, dropIndex: number) => {
     e.preventDefault();
     if (draggedIndex !== null && draggedIndex !== dropIndex) {
-      onReorderCategories(draggedIndex, dropIndex);
+      handleReorderCategories(draggedIndex, dropIndex);
     }
     setDraggedIndex(null);
     setDragOverIndex(null);
@@ -56,7 +57,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
 
   const confirmDelete = (categoryId: string, categoryName: string) => {
     if (window.confirm(`カテゴリ「${categoryName}」を削除しますか？\n※このカテゴリのメニューも削除されます。`)) {
-      onDeleteCategory(categoryId);
+      handleDeleteCategory(categoryId);
     }
   };
 
@@ -126,12 +127,12 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();
-                onAddCategory();
+                handleAddCategory();
               }
             }}
           />
           <button
-            onClick={onAddCategory}
+            onClick={handleAddCategory}
             disabled={!newCategory.trim()}
             className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
           >
@@ -209,7 +210,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                 <div className="flex gap-1 opacity-60">
                   <button
                     disabled={index === 0}
-                    onClick={() => onMoveCategory(index, 'up')}
+                    onClick={() => moveCategory(index, 'up')}
                     className={`p-2 rounded-md transition-colors ${
                       index === 0 
                         ? 'opacity-30 cursor-not-allowed' 
@@ -223,7 +224,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
                   </button>
                   <button
                     disabled={index === categories.length - 1}
-                    onClick={() => onMoveCategory(index, 'down')}
+                    onClick={() => moveCategory(index, 'down')}
                     className={`p-2 rounded-md transition-colors ${
                       index === categories.length - 1 
                         ? 'opacity-30 cursor-not-allowed' 

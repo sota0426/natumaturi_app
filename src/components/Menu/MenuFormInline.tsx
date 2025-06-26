@@ -1,12 +1,12 @@
-// components/MenuFormInline.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Category, MenuItem } from '@/types';
-import { useMenuData } from '@/hooks/useMenuData';
+import { useMenuManagement } from '@/hooks/useMenuManagement';
 
 interface Props {
   onCancel: () => void;
   isEditing: boolean;
-  category:Category;
+  category: Category;
+  menu:MenuItem;
   onSubmitSuccess: () => void;
 }
 
@@ -14,23 +14,24 @@ export const MenuFormInline: React.FC<Props> = ({
   onCancel,
   isEditing,
   category,
+  menu,
   onSubmitSuccess
 }) => {
+  const { AddMenu, UpdateAndSave } = useMenuManagement();
 
-  
-    const { AddMenu,UpdateAndSave } = useMenuData();
+  const [form, setForm] = useState<MenuItem>({
+    id: menu.id || "",
+    categoryId: menu.categoryId || category.id,
+    categoryName: menu.categoryName || "",
+    name: menu.name || "",
+    price: menu.price || "",
+    stock: menu.stock || "",
+  });
 
-    const [form, setForm] = useState<MenuItem>({
-      id: "",
-      categoryId: category.id,
-      categoryName:"",
-      name: '',
-      price: "" ,
-      stock: "" ,
-    });
 
   const handleSubmit = () => {
-    if(!form.price || !form.stock) return;
+    if (!form.name || !form.price || !form.stock) return;
+
     AddMenu({
       categoryId: category.id,
       name: form.name,
@@ -38,53 +39,54 @@ export const MenuFormInline: React.FC<Props> = ({
       stock: form.stock,
     });
 
-    // 保存が成功したら呼び出す
     onSubmitSuccess();
   };
-  
-
 
   return (
-    <div className="flex gap-2 items-end mb-2">
+    <div className="flex flex-wrap md:flex-nowrap gap-3 items-end bg-gray-50 p-4 rounded-lg border border-gray-200 mb-3">
       <input
         type="text"
         placeholder="メニュー名"
         value={form.name}
         onChange={(e) => setForm({ ...form, name: e.target.value })}
-        className="border p-1 rounded w-32"
+        className="flex-1 min-w-[150px] border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
       />
 
       <input
         type="number"
         placeholder="金額"
         value={form.price}
-        onChange={(e) => setForm({ ...form, price: Number(e.target.value) })}
-        className="border p-1 rounded w-20"
+        onChange={(e) =>
+          setForm({ ...form, price: Number(e.target.value) })
+        }
+        className="w-28 border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
       />
 
       <input
         type="number"
         placeholder="残数"
-        value={form.stock}
-        onChange={(e) => setForm({ ...form, stock: Number(e.target.value) })}
-        className="border  p-1 rounded w-20"
+        value={form.stock }
+        onChange={(e) =>
+          setForm({ ...form, stock: Number(e.target.value) })
+        }
+        className="w-28 border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
       />
 
-
-      <button 
-        onClick={()=>{
-          handleSubmit();
-        }} 
-        className="bg-green-600 text-white px-2 py-1 rounded"
+      <button
+        onClick={handleSubmit}
         disabled={!form.name || !form.price || !form.stock}
+        className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center justify-center ${
+          !form.name || !form.price || !form.stock
+            ? 'bg-gray-300 text-white cursor-not-allowed'
+            : 'bg-green-600 hover:bg-green-700 text-white'
+        }`}
       >
         {isEditing ? '更新' : '登録'}
       </button>
 
-
-      <button 
-        onClick={onCancel} 
-        className="text-sm text-gray-500 underline"
+      <button
+        onClick={onCancel}
+        className="text-sm text-gray-500 hover:text-gray-700 underline"
       >
         キャンセル
       </button>

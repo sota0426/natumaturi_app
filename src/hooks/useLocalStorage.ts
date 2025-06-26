@@ -10,13 +10,17 @@ export const useLocalStorage = () => {
   useEffect(() => {
     const storedCats = localStorage.getItem('categories');
     const storedMenus = localStorage.getItem('menus');
+
     if (storedCats) setCategories(JSON.parse(storedCats));
     if (storedMenus) setMenus(JSON.parse(storedMenus));
   }, []);
 
+
+  
   const saveToLocalStorage = (cats: Category[], menuList: MenuItem[]) => {
     localStorage.setItem('categories', JSON.stringify(cats));
     localStorage.setItem('menus', JSON.stringify(menuList));
+
   };
 
   return {
