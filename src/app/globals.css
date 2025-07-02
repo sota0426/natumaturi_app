@@ -120,3 +120,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+.gutter {
+  background-color: #e5e7eb; /* Tailwindでいうbg-gray-200 */
+  cursor: col-resize;
+  width: 8px;
+}
+
+.gutter:hover {
+  background-color: #d1d5db; /* bg-gray-300 */
+}

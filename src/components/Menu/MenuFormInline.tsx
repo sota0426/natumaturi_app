@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { Category, MenuItem } from '@/types';
-import { useMenuManagement } from '@/hooks/useMenuManagement';
 
 interface Props {
   onCancel: () => void;
   isEditing: boolean;
   category: Category;
-  menu:MenuItem;
-  onSubmitSuccess: () => void;
+  menu?: MenuItem; // オプショナルに変更
+  onSubmitSuccess: (menuData: MenuItem) => void; // メニューデータを渡すように修正
 }
 
 export const MenuFormInline: React.FC<Props> = ({
@@ -17,29 +16,27 @@ export const MenuFormInline: React.FC<Props> = ({
   menu,
   onSubmitSuccess
 }) => {
-  const { AddMenu, UpdateAndSave } = useMenuManagement();
-
-  const [form, setForm] = useState<MenuItem>({
-    id: menu.id || "",
-    categoryId: menu.categoryId || category.id,
-    categoryName: menu.categoryName || "",
-    name: menu.name || "",
-    price: menu.price || "",
-    stock: menu.stock || "",
+  const [form, setForm] = useState({
+    id: menu?.id || 0,
+    categoryId: menu?.categoryId || category.id,
+    name: menu?.name || "",
+    price: menu?.price || 0,
+    stock: menu?.stock || 0,
   });
-
 
   const handleSubmit = () => {
     if (!form.name || !form.price || !form.stock) return;
 
-    AddMenu({
+    const menuData: MenuItem = {
+      id: isEditing ? form.id : Date.now() + Math.random(), // 新規作成時は新しいIDを生成
       categoryId: category.id,
       name: form.name,
-      price: form.price,
-      stock: form.stock,
-    });
+      price: Number(form.price),
+      stock: Number(form.stock),
+    };
 
-    onSubmitSuccess();
+    console.log('Submitting menu data:', menuData); // デバッグ用
+    onSubmitSuccess(menuData);
   };
 
   return (
@@ -55,9 +52,9 @@ export const MenuFormInline: React.FC<Props> = ({
       <input
         type="number"
         placeholder="金額"
-        value={form.price}
+        value={form.price || ''}
         onChange={(e) =>
-          setForm({ ...form, price: Number(e.target.value) })
+          setForm({ ...form, price: Number(e.target.value) || 0 })
         }
         className="w-28 border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
       />
@@ -65,10 +62,11 @@ export const MenuFormInline: React.FC<Props> = ({
       <input
         type="number"
         placeholder="残数"
-        value={form.stock }
+        value={form.stock || ''}
         onChange={(e) =>
-          setForm({ ...form, stock: Number(e.target.value) })
+          setForm({ ...form, stock: e.target.value || 0 })
         }
+        min={0}
         className="w-28 border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
       />
 

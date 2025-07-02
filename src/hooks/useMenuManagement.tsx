@@ -11,35 +11,20 @@ export const useMenuManagement = () => {
     saveToLocalStorage,
   } = useLocalStorage();
 
+  // カテゴリIDを再割り当て（必要なら）
   const reassignCategoryIds = (cats: Category[]) => {
     return cats.map((cat, i) => ({ ...cat, id: i + 1 }));
   };
 
-  const reassignMenuIds = (menus: MenuItem[], cats: Category[]) => {
-    let newMenus: MenuItem[] = [];
-    cats.forEach((cat) => {
-      const filtered = menus.filter((m) => m.categoryName === cat.name);
-      filtered.forEach((m, i) => {
-        newMenus.push({
-          ...m,
-          categoryId: cat.id,
-          id: i + 1,
-        });
-      });
-    });
-    return newMenus;
-  };
-
+  // 全データ保存（IDを保持）
   const UpdateAndSave = (updatedCats: Category[], updatedMenus: MenuItem[]) => {
-    const newCats = reassignCategoryIds(updatedCats);
-    const newMenus = reassignMenuIds(updatedMenus, newCats);
+    const newCats = reassignCategoryIds(updatedCats); // category.id の再整理だけ行う
     setCategories(newCats);
-    setMenus(newMenus);
-    saveToLocalStorage(newCats, newMenus);
+    setMenus(updatedMenus);
+    saveToLocalStorage(newCats, updatedMenus);
   };
 
-
-
+  // メニュー追加
   const AddMenu = (form: {
     categoryId: number;
     name: string;
@@ -48,14 +33,11 @@ export const useMenuManagement = () => {
   }) => {
     const { categoryId, name, price, stock } = form;
 
-    const category = categories?.find((c) => c.id === categoryId);
-    alert(JSON.stringify(category)); // デバッグ用
-
-    if (!category || !name.trim() || !price || !stock) {
-      return;
-    }
+    const category = categories.find((c) => c.id === categoryId);
+    if (!category || !name.trim() || !price || !stock) return;
 
     const maxId = menus.length ? Math.max(...menus.map((m) => m.id)) : 0;
+
     const newMenu: MenuItem = {
       id: maxId + 1,
       categoryId: category.id,
@@ -63,21 +45,29 @@ export const useMenuManagement = () => {
       name: name.trim(),
       price,
       stock,
-    }
+    };
+
     UpdateAndSave(categories, [...menus, newMenu]);
   };
 
+  // メニュー編集
+  const UpdateMenu = (updatedMenu: MenuItem) => {
+    const updatedMenus = menus.map((menu) =>
+      menu.id === updatedMenu.id ? { ...updatedMenu } : menu
+    );
+    UpdateAndSave(categories, updatedMenus);
+  };
 
-  const DeleteMenu = (menuId:number)=>{
-    const updatedMenus = menus.filter((m)=> m.id !== menuId);
-    UpdateAndSave(categories,updatedMenus);
-  }
-
-
+  // メニュー削除
+  const DeleteMenu = (menuId: number) => {
+    const updatedMenus = menus.filter((m) => m.id !== menuId);
+    UpdateAndSave(categories, updatedMenus);
+  };
 
   return {
+    UpdateMenu,
     UpdateAndSave,
     AddMenu,
-    DeleteMenu
+    DeleteMenu,
   };
 };
