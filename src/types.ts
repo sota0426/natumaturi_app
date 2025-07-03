@@ -12,9 +12,25 @@ export type MenuItem = {
   stock: number | "" ;
 };
 
+export interface CartItem extends MenuItem  {
+  quantity: number;
+}
+
 export type MenuForm = {
   categoryId: number  ;
   name: string;
   price: number | "" ;
   stock: number | "" ;
 };
+
+export interface CartContextType {
+  cartItems: CartItem[];
+  isOrderCompleted: boolean;
+  orderSubmit: () => void;
+  proceedToNextOrder: () => void;
+  addToCart: (menu: MenuItem) => void;
+  removeFromCart: (menuId: number) => void;
+  receivedAmount:number;
+  clearCart: () => void;
+}
+

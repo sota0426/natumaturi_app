@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Category, MenuForm } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useCart } from '@/hooks/CartContext';
+import { useCart } from '@/hooks/useCartContent';
 
 interface Props {
   category: Category;
