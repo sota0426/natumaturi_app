@@ -36,9 +36,7 @@ export const CartPreview: React.FC = () => {
       )}
 
               {/* 会計処理コンポーネント */}
-        {cartItems.length > 0 && (
           <Checkout total={total} onSubmit={orderSubmit} />
-        )}
    
           <button
             onClick={clearCart}

@@ -34,3 +34,9 @@ export interface CartContextType {
   clearCart: () => void;
 }
 
+export interface Sale {
+  timestamp: string;
+  items: CartItem[];
+  total: number;
+  refunded?: boolean;
+}

@@ -28,7 +28,7 @@ export const Checkout:React.FC<Props>=({total,onSubmit})=>{
       <div className="text-gray-800 mb-4 text-2xl">
         おつり：
         <span className="font-bold text-green-700">
-          ￥{change >=0 ? change.toLocaleString() : "不足しています"}
+          {change >=0 ? `￥${change.toLocaleString()}` : "不足しています"}
         </span>
       </div>
 
