@@ -62,7 +62,6 @@ export const MenuScreen = () => {
         <AccountCategoryBlock 
           key={cat.id} 
           category={cat}
-          hideSoldOut={hideSoldOut}
           onCollectSoldOutMenus={collectSoldOutMenus}
         />
       ))}

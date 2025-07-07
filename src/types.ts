@@ -4,12 +4,12 @@ export type Category = {
 };
 
 export type MenuItem = {
-  id: number  | "" ;
+  id: number ;
   categoryId: number ;
   categoryName: string;
   name: string;
-  price: number | "" ;
-  stock: number | "" ;
+  price: number  ;
+  stock: number ;
 };
 
 export interface CartItem extends MenuItem  {
@@ -17,10 +17,11 @@ export interface CartItem extends MenuItem  {
 }
 
 export type MenuForm = {
+  id:number;
   categoryId: number  ;
   name: string;
-  price: number | "" ;
-  stock: number | "" ;
+  price: number ;
+  stock: number ;
 };
 
 export interface CartContextType {

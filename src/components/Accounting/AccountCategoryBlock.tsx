@@ -21,7 +21,7 @@ export const AccountCategoryBlock: React.FC<Props> = ({
     if (Array.isArray(menus)) {
       const initialStock: Record<number, number> = {};
       menus.forEach(menu => {
-        initialStock[menu.id] = menu.stock;
+      initialStock[menu.id] = typeof menu.stock === "number" ? menu.stock : 0
       });
       setTempStockMap(initialStock);
     }
@@ -52,7 +52,7 @@ export const AccountCategoryBlock: React.FC<Props> = ({
 
   // 前回の売り切れリストのキーを保持
 const prevSoldOutKeyRef = useRef<string>('');
-const onCollectSoldOutMenusRef = useRef<typeof onCollectSoldOutMenus>();
+const onCollectSoldOutMenusRef = useRef<typeof onCollectSoldOutMenus | undefined>(undefined);
 
 
     // 🔥 売り切れメニューを親に報告

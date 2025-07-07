@@ -33,7 +33,7 @@ export default function SaleHistory() {
     const updatedMenus = menus.map((menu: MenuItem) => {
       const refundedItem = saleToRefund.items.find((item) => item.id === menu.id);
       if (refundedItem) {
-        return { ...menu, stock: (menu.stock ?? 0) + refundedItem.quantity };
+        return { ...menu, stock: Number(menu.stock ?? 0) + refundedItem.quantity };
       }
       return menu;
     });

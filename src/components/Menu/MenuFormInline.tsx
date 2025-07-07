@@ -29,6 +29,7 @@ export const MenuFormInline: React.FC<Props> = ({
 
     const menuData: MenuItem = {
       id: isEditing ? form.id : Date.now() + Math.random(), // 新規作成時は新しいIDを生成
+      categoryName:category.name,
       categoryId: category.id,
       name: form.name,
       price: Number(form.price),
@@ -64,7 +65,7 @@ export const MenuFormInline: React.FC<Props> = ({
         placeholder="残数"
         value={form.stock || ''}
         onChange={(e) =>
-          setForm({ ...form, stock: e.target.value || 0 })
+          setForm({ ...form, stock: Number(e.target.value) || 0 })
         }
         min={0}
         className="w-28 border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"

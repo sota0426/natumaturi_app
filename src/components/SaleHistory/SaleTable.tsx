@@ -1,5 +1,4 @@
-import { MenuItem } from "@/types";
-import { Sale } from "./SaleHistory";
+import { MenuItem, Sale } from "@/types";
 import SaleRow from "./SaleRow";
 import SubtotalRow from "./SubtotalRow";
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useCategoryManagement } from '@/hooks/useCategoryManagement';
-import { useMenuManagement } from '@/hooks/useMenuManagement';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 
 
@@ -11,7 +10,6 @@ export const CategorySection= () => {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false); // デフォルトで表示状態
 
-  const { updateAndSave } = useMenuManagement();
   const { categories, menus} = useLocalStorage();
     
     const {
@@ -55,7 +53,7 @@ export const CategorySection= () => {
     setDragOverIndex(null);
   };
 
-  const confirmDelete = (categoryId: string, categoryName: string) => {
+  const confirmDelete = (categoryId: number, categoryName: string) => {
     if (window.confirm(`カテゴリ「${categoryName}」を削除しますか？\n※このカテゴリのメニューも削除されます。`)) {
       handleDeleteCategory(categoryId);
     }

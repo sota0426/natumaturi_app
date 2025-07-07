@@ -1,5 +1,5 @@
 import { useCart } from "@/hooks/useCartContent";
-import { useMemo, useState } from "react";
+import {  useState } from "react";
 
 type Props={
   total:number;
