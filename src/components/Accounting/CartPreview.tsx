@@ -5,7 +5,7 @@ import { OrderCompletionScreen } from './OrderCompletionScreen';
 
 
 export const CartPreview: React.FC = () => {
-  const { cartItems, clearCart, isOrderCompleted,orderSubmit } = useCart();
+  const { cartItems, isOrderCompleted } = useCart();
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -25,25 +25,15 @@ export const CartPreview: React.FC = () => {
             ))}
           </ul>
 
-
-          <div className="text-right font-bold text-3xl text-gray-800 mb-4">
-            合計: ¥{total.toLocaleString()}
-          </div>
-
-
-
         </>
       )}
 
               {/* 会計処理コンポーネント */}
-          <Checkout total={total} onSubmit={orderSubmit} />
+          <Checkout 
+            total={total} 
+          />
    
-          <button
-            onClick={clearCart}
-            className="mt-10 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition"
-          >
-            カートを空にする
-          </button>
+
       {/* 注文完了画面（モーダル） */}
       {isOrderCompleted && <OrderCompletionScreen/>}
     </div>

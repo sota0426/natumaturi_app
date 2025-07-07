@@ -20,7 +20,7 @@ const SaleHistoryHeader=({onExport,onClear}:Props)=>{
       <Button
         variant="default" 
         className="bg-black"
-        onClick={onExport}
+        onClick={onClear}
       >
         履歴を全削除
       </Button>

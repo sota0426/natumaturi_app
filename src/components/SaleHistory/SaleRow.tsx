@@ -23,7 +23,7 @@ export default function SaleRow({ sale, index, menus, onRefund }: Props) {
           </td>
         );
       })}
-      <td className="border px-2 py-1 text-center">{sale.refunded ? "はい" : "いいえ"}</td>
+      <td className="border px-2 py-1 text-center">{sale.refunded ? "済" : ""}</td>
       <td className="border px-2 py-1 text-center">
         {!sale.refunded && (
           <Button 

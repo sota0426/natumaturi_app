@@ -26,7 +26,7 @@ export type MenuForm = {
 export interface CartContextType {
   cartItems: CartItem[];
   isOrderCompleted: boolean;
-  orderSubmit: () => void;
+  orderSubmit: (deposit:number) => void;
   proceedToNextOrder: () => void;
   addToCart: (menu: MenuItem) => void;
   removeFromCart: (menuId: number) => void;

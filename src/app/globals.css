@@ -118,6 +118,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-user-select: none; /* Safari, Chrome (古い) */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer, Edge (旧) */
+    user-select: none;         /* 標準 */
   }
 }
 

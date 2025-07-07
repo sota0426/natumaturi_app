@@ -48,7 +48,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const orderSubmit = () => {
+  const orderSubmit = (deposit:number) => {
+    setReceivedAmount(deposit)
     try {
       // １．在庫を更新
       const updatedMenus = menus.map((menu) => {
@@ -63,14 +64,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       });
 
       // ２．会計履歴を保存
-      const now = new Date();
-      const timestamp = `${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
-
       const history = JSON.parse(localStorage.getItem("salesHistory") || "[]");
       const newHistory = [
         ...history,
         {
-          timestamp: timestamp,
+          timestamp: new Date().toISOString(),
           items: cartItems,
           total: cartItems.reduce(
             (sum, item) => sum + item.price * item.quantity,

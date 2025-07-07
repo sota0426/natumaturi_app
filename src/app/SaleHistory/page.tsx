@@ -93,7 +93,10 @@ export default function SaleHistory() {
   return (
     <div className="p-6 space-y-4">
       <h1 className="text-2xl font-bold">会計履歴</h1>
-      <SaleHistoryHeader onExport={handleExport} onClear={handleClearHistory} />
+      <SaleHistoryHeader 
+        onExport={handleExport} 
+        onClear={handleClearHistory} 
+      />
       {sales.length === 0 ? <p>会計履歴がありません。</p> : <SaleTable sales={sales} allMenus={allMenus} onRefund={handleRefund} />}
     </div>
   );
