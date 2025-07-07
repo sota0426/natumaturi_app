@@ -1,4 +1,4 @@
-import { useCart } from "@/hooks/useCartContent";
+import { useCart } from "../../hooks/useCartContent";
 import {  useState } from "react";
 
 type Props={
@@ -90,7 +90,7 @@ const handleSubmit = () => {
 
       <button
         onClick={handleSubmit}
-        disabled={change < 0}
+        disabled={total === 0 || change < 0}
         className={`px-4 py-2 rounded text-white transition ${
           (total > 0 && change >= 0) ? 'bg-red-500 hover:bg-red-600':'bg-gray-400 cursor-not-allowed'
         }`} 
@@ -105,6 +105,7 @@ const handleSubmit = () => {
           <button
             onClick={handleCartClear}
             className="text-right mt-4 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition"
+            disabled={total === 0}
           >
             カートを空にする
           </button>

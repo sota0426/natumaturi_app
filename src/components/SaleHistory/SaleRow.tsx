@@ -1,5 +1,5 @@
 
-import { MenuItem, Sale } from "@/types";
+import { MenuItem, Sale } from "../../types";
 import { Button } from "../ui/button";
 
 interface Props {

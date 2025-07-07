@@ -1,6 +1,6 @@
 // components/OrderCompletionScreen.tsx
 
-import { useCart } from "@/hooks/useCartContent";
+import { useCart } from "../../hooks/useCartContent";
 
 export const OrderCompletionScreen = () => {
   const { cartItems, proceedToNextOrder, receivedAmount } = useCart(); // 預り金も取得

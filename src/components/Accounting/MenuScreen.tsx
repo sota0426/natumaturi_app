@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useLocalStorage } from '@/hooks/useLocalStorage'; 
+import { useLocalStorage } from '../../hooks/useLocalStorage'; 
 import { AccountCategoryBlock } from './AccountCategoryBlock';
-import { MenuForm } from '@/types';
+import { MenuForm } from '../../types';
 
 export const MenuScreen = () => {
   const [hideSoldOut, setHideSoldOut] = useState(false);
@@ -50,7 +50,7 @@ export const MenuScreen = () => {
                 key={menu.id}
                 className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 flex justify-between items-center"
               >
-                <span className="text-gray-700 font-medium truncate">{menu.name}</span>
+                <span className="text-gray-700 font-medium truncate">{menu.id} : {menu.name}</span>
                 <span className="text-red-600 font-semibold">売り切れ</span>
               </div>
             ))}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Category, MenuForm } from '@/types';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useCart } from '@/hooks/useCartContent';
+import { Category, MenuForm } from '../../types';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { useCart } from '../../hooks/useCartContent';
 
 interface Props {
   category: Category;
@@ -106,7 +106,7 @@ useEffect(() => {
     >
       <div className="flex flex-col lg:flex-row lg:items-center gap-4">
         <div className="flex-1 min-w-0">
-          <span className="text-gray-800 font-semibold text-lg block truncate">{menu.name}</span>
+          <span className="text-gray-800 font-semibold text-lg block truncate">{menu.id} : {menu.name}</span>
         </div>
         <div className="flex items-center gap-6 flex-shrink-0">
           <div className="flex items-center gap-2 min-w-0">
@@ -170,7 +170,7 @@ useEffect(() => {
         <span className="bg-blue-100 text-blue-700 rounded-full w-7 h-7 flex items-center justify-center text-sm font-semibold">
           🍽
         </span>
-        {category.name}
+        {category.id} ---- {category.name} ----
         <span className="text-sm text-gray-500 ml-auto">
           {availableMenus.length} 件のメニュー
         </span>

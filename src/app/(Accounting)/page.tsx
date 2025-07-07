@@ -1,8 +1,8 @@
 'use client';
 
 import Split from 'react-split';
-import { MenuScreen } from '@/components/Accounting/MenuScreen';
-import { CartPreview } from '@/components/Accounting/CartPreview';
+import { MenuScreen } from '../../components/Accounting/MenuScreen';
+import { CartPreview } from '../../components/Accounting/CartPreview';
 
 const AccountingPage = () => {
   return (

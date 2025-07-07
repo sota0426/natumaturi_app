@@ -1,6 +1,6 @@
 'use client';
 
-import { Category, MenuItem } from '@/types';
+import { Category, MenuItem } from '../types';
 import { useEffect, useState } from 'react';
 
 export const useLocalStorage = () => {

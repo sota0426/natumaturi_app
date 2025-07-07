@@ -1,5 +1,5 @@
 import React, {useState } from 'react';
-import { Category, MenuItem } from '@/types';
+import { Category, MenuItem } from '../../types';
 
 interface Props {
   onCancel: () => void;

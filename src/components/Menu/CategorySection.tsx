@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useCategoryManagement } from '@/hooks/useCategoryManagement';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useCategoryManagement } from '../../hooks/useCategoryManagement';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 
 

@@ -1,7 +1,7 @@
 // hooks/CartContext.tsx
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { CartContextType, CartItem, MenuItem } from "@/types";
+import { CartContextType, CartItem, MenuItem } from "../types";
 import { useLocalStorage } from "./useLocalStorage";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);

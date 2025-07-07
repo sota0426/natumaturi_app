@@ -1,8 +1,8 @@
 "use client";
 
-import SaleHistoryHeader from "@/components/SaleHistory/SaleHistoryHeader";
-import SaleTable from "@/components/SaleHistory/SaleTable";
-import { CartItem, MenuItem } from "@/types";
+import SaleHistoryHeader from "../../components/SaleHistory/SaleHistoryHeader";
+import SaleTable from "../../components/SaleHistory/SaleTable";
+import { CartItem, MenuItem } from "../../types";
 import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -53,42 +53,56 @@ export default function SaleHistory() {
   };
 
   const handleExport = () => {
-    const headers = ["No", "日時", "合計", ...allMenus.map((m) => m.name), "払い戻し済み"];
-    const exportData = [...sales].map((sale, i) => {
-      const row: any = {
-        No: sales.length - i,
-        日時: sale.timestamp,
-        合計: sale.total,
-        払い戻し済み: sale.refunded ? "はい" : "いいえ",
-      };
-      allMenus.forEach((menu) => {
-        const soldItem = sale.items.find((item) => item.id === menu.id);
-        row[menu.name] = soldItem ? soldItem.quantity : "";
-      });
-      return row;
-    });
+  const headers = ["No", "日時", "合計", ...allMenus.map((m) => m.name)];
 
-    const subtotal: any = {
-      No: "小計",
-      日時: "",
-      合計: "",
-      払い戻し済み: "",
+  // メニューごとの価格行を生成
+  const priceRow: any = {
+    No: "メニュー価格",
+    日時: "",
+    合計: "",
+  };
+  allMenus.forEach((menu) => {
+    priceRow[menu.name] = menu.price ?? "";
+  });
+
+  // 会計履歴から払い戻しを除外して出力データ作成
+  const validSales = sales.filter((sale) => !sale.refunded);
+  const exportData = validSales.map((sale, i) => {
+    const row: any = {
+      No: validSales.length - i,
+      日時: sale.timestamp,
+      合計: sale.total,
     };
     allMenus.forEach((menu) => {
-      subtotal[menu.name] = sales
-        .filter((s) => !s.refunded)
-        .reduce((sum, s) => {
-          const item = s.items.find((i) => i.id === menu.id);
-          return sum + (item?.quantity || 0);
-        }, 0);
+      const soldItem = sale.items.find((item) => item.id === menu.id);
+      row[menu.name] = soldItem ? soldItem.quantity : "";
     });
-    exportData.unshift(subtotal);
+    return row;
+  });
 
-    const worksheet = XLSX.utils.json_to_sheet(exportData, { header: headers });
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "会計履歴");
-    XLSX.writeFile(workbook, "会計履歴.xlsx");
+  // 小計行
+  const subtotal: any = {
+    No: "小計",
+    日時: "",
+    合計: "",
   };
+  allMenus.forEach((menu) => {
+    subtotal[menu.name] = validSales.reduce((sum, s) => {
+      const item = s.items.find((i) => i.id === menu.id);
+      return sum + (item?.quantity || 0);
+    }, 0);
+  });
+
+  // データの順番: 小計 → 価格行 → 会計履歴
+  const finalExportData = [priceRow,subtotal, ...exportData];
+
+  // エクセル作成処理
+  const worksheet = XLSX.utils.json_to_sheet(finalExportData, { header: headers });
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "会計履歴");
+  XLSX.writeFile(workbook, "会計履歴.xlsx");
+};
+
 
   return (
     <div className="p-6 space-y-4">

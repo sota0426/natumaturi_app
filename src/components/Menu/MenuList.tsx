@@ -1,6 +1,6 @@
 import React from 'react';
 import { CategoryBlock } from './CategoryBlock';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const MenuList = () => {
   const { categories, menus } = useLocalStorage();

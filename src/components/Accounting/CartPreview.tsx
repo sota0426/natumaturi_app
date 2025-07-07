@@ -1,4 +1,4 @@
-import { useCart } from '@/hooks/useCartContent';
+import { useCart } from '../../hooks/useCartContent';
 import React from 'react';
 import { Checkout } from './Checkout';
 import { OrderCompletionScreen } from './OrderCompletionScreen';

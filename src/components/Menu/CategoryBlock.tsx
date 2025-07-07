@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Category } from '@/types';
+import { Category } from '../../types';
 import { MenuFormInline } from './MenuFormInline';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface Props {
   category: Category;
