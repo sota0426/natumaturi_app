@@ -27,7 +27,7 @@ export function generateExcelTemplate() {
     { id: 67, categoryId: 6, categoryName: "焼き鳥", name: "タン（塩）", price: 470, stock: 2 },
     { id: 71, categoryId: 7, categoryName: "肉料理", name: "肉巻きドッグ", price: 480, stock: 4 },
     { id: 72, categoryId: 7, categoryName: "肉料理", name: "フランクフルト", price: 330, stock: 4 },
-    { id: 73, categoryId: 5, categoryName: "スイーツ", name: "シャーベットアイス", price: 380, stock: 5 }
+    { id: 73, categoryId: 7, categoryName: "スイーツ", name: "シャーベットアイス", price: 380, stock: 5 }
   ];
 
   const worksheet = XLSX.utils.json_to_sheet(data);
