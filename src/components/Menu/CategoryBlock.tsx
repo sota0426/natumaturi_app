@@ -12,7 +12,6 @@ export const CategoryBlock: React.FC<Props> = ({ category }) => {
   const [editingId, setEditingId] = useState<number | ''>('');
   const { 
     menus,
-    categories,
     isLoaded,
     deleteMenu,
     updateMenu,

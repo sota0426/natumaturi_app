@@ -56,6 +56,7 @@ export default function SaleHistory() {
   const headers = ["No", "日時", "合計", ...allMenus.map((m) => m.name)];
 
   // メニューごとの価格行を生成
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const priceRow: any = {
     No: "メニュー価格",
     日時: "",
@@ -68,6 +69,7 @@ export default function SaleHistory() {
   // 会計履歴から払い戻しを除外して出力データ作成
   const validSales = sales.filter((sale) => !sale.refunded);
   const exportData = validSales.map((sale, i) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     const row: any = {
       No: validSales.length - i,
       日時: sale.timestamp,
@@ -81,6 +83,7 @@ export default function SaleHistory() {
   });
 
   // 小計行
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const subtotal: any = {
     No: "小計",
     日時: "",

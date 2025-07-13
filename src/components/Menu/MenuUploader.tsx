@@ -46,6 +46,7 @@ export default function MenuUploader() {
 
       const workbook = XLSX.read(data, { type: "binary" });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
       const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
 
       try {
