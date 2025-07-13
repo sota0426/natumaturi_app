@@ -1,3 +1,4 @@
+// src\components\Menu\CategorySection.tsx
 import React, { useState } from 'react';
 import { useCategoryManagement } from '../../hooks/useCategoryManagement';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
@@ -60,8 +61,8 @@ export const CategorySection= () => {
   };
 
   return (
-    <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div className="flex items-center justify-between mb-6">
+    <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
         <div className="flex items-center gap-4">
           <h2 className="text-2xl font-bold text-gray-800 flex items-center">
             <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold mr-3">
@@ -121,7 +122,7 @@ export const CategorySection= () => {
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             className="border border-gray-300 p-3 rounded-lg flex-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            placeholder="新しいカテゴリ名を入力してください"
+            placeholder="新しいカテゴリ名"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();
@@ -134,8 +135,7 @@ export const CategorySection= () => {
             disabled={!newCategory.trim()}
             className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center gap-2"
           >
-            <span className="text-lg">＋</span>
-            追加
+            <span className="text-sm md:text-lg">＋追加</span>
           </button>
         </div>
       </div>
@@ -198,7 +198,7 @@ export const CategorySection= () => {
                 </div>
                 
                 {/* カテゴリ名 */}
-                <span className="font-medium text-gray-800 text-lg">
+                <span className="font-medium text-gray-800 md:text-lg">
                   {category.name}
                 </span>
               </div>

@@ -1,3 +1,5 @@
+//src\components\Menu\CategoryBlock.tsx
+
 import React, { useState } from 'react';
 import { Category } from '../../types';
 import { MenuFormInline } from './MenuFormInline';
@@ -66,9 +68,9 @@ export const CategoryBlock: React.FC<Props> = ({ category }) => {
                 </div>
                 
                 {/* 価格と在庫を統一したレイアウト */}
-                <div className="flex items-center gap-6 flex-shrink-0">
+                 <div className="flex flex-wrap items-start gap-4 sm:gap-6">
                   {/* 金額の表示 */}
-                  <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex items-center gap-2 min-w-[100px]">
                     <span className="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap">
                       価格
                     </span>
@@ -78,7 +80,7 @@ export const CategoryBlock: React.FC<Props> = ({ category }) => {
                   </div>
                   
                   {/* 残数の表示 */}
-                  <div className="flex items-center gap-2 min-w-0">
+                  <div className="flex items-center gap-2 min-w-[100px]">
                     <span className={`text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap ${
                       menu.stock > 10 
                         ? 'bg-blue-100 text-blue-800' 
@@ -100,7 +102,7 @@ export const CategoryBlock: React.FC<Props> = ({ category }) => {
                   </div>
                   
                   {/* ボタン */}
-                  <div className="flex gap-3 text-sm">
+                 <div className="flex gap-2 flex-wrap min-w-[120px]">
                     <button
                       onClick={() => setEditingId(menu.id)}
                       className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-800 font-medium rounded-lg transition-colors duration-200 border border-blue-200 whitespace-nowrap"

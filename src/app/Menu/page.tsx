@@ -11,10 +11,11 @@ import ExcelTemplateDownloader from '@/components/Menu/ExcelTemplateDownloader';
 const MenuPage = () => {
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-10">
+    <div className="w-full px-4 sm:px-6 md:px-10 lg:px-20 max-w-7xl mx-auto space-y-10">
+
       <CategorySection />
       <MenuList />  
-     <ExcelTemplateDownloader />      
+      <ExcelTemplateDownloader />      
       <MenuUploader  />
     </div>
   );
