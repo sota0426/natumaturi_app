@@ -1,4 +1,4 @@
-import { Category, MenuItem } from "@/types";
+import { Category, MenuItem } from "../src/types";
 
 export const categories: Category[]=[
   { id: 1, name: "くじ・遊び" },
